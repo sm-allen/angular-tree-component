@@ -46,8 +46,8 @@ import { TreeNode } from '../models/tree-node.model';
           </tree-node-content>
         </div>
       </div>
-      <ng-container 
-        [ngTemplateOutlet]="templates.treeNodeWrapperTemplate" 
+      <ng-container
+        [ngTemplateOutlet]="templates.treeNodeWrapperTemplate"
         [ngOutletContext]="{ $implicit: node, node: node, index: index }">
       </ng-container>
     `

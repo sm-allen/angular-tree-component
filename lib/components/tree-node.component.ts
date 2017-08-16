@@ -9,6 +9,9 @@ import { TreeNode } from '../models/tree-node.model';
     <ng-container *mobxAutorun>
       <div
         *ngIf="!templates.treeNodeFullTemplate"
+        role="treeitem"
+        [attr.aria-expanded]="node.hasChildren ? !!node.isExpanded : null"
+        [attr.aria-selected]="node.isFocused"
         [class]="node.getClass()"
         [class.tree-node]="true"
         [class.tree-node-expanded]="node.isExpanded && node.hasChildren"

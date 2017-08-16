@@ -35,12 +35,13 @@ import { TreeNode } from '../models/tree-node.model';
   template: `
     <ng-container *mobxAutorun>
       <span
+        role="button"
+        [attr.aria-label]="ariaLabel"
         *ngIf="node.hasChildren"
         [class.toggle-children-wrapper-expanded]="node.isExpanded"
         [class.toggle-children-wrapper-collapsed]="node.isCollapsed"
         class="toggle-children-wrapper"
         (click)="node.mouseAction('expanderClick', $event)">
-
         <span class="toggle-children"></span>
       </span>
       <span
@@ -52,4 +53,5 @@ import { TreeNode } from '../models/tree-node.model';
 })
 export class TreeNodeExpanderComponent {
   @Input() node: TreeNode;
+  ariaLabel = 'expand or collapse folder';
 }

@@ -44,12 +44,10 @@ export class TreeModel implements ITreeModel {
     this.events[eventName].subscribe(fn);
   }
 
-
   // getters
   getFocusedNode(): TreeNode {
     return this.focusedNode;
   }
-
 
   getActiveNode(): TreeNode {
     return this.activeNodes[0];

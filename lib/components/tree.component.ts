@@ -36,6 +36,8 @@ const { includes, pick }  = _;
     <tree-viewport #viewport>
       <div
         class="tree"
+        role="tree"
+        tabindex="0"
         [class.node-dragging]="treeDraggedElement.isDragging()">
         <tree-node-collection
           *ngIf="treeModel.roots"
@@ -104,18 +106,18 @@ export class TreeComponent implements OnChanges {
       treeModel.subscribeToState((state) => this.stateChange.emit(state));
   }
 
-  @HostListener('body: keydown', ['$event'])
+  @HostListener('keydown', ['$event'])
   onKeydown($event) {
     if (!this.treeModel.isFocused) return;
     if (includes(['input', 'textarea'],
         document.activeElement.tagName.toLowerCase())) return;
 
-    const focusedNode = this.treeModel.getFocusedNode();
+    let focusedNode = this.treeModel.getFocusedNode();
 
     this.treeModel.performKeyAction(focusedNode, $event);
   }
 
-  @HostListener('body: mousedown', ['$event'])
+  @HostListener('mousedown', ['$event'])
   onMousedown($event) {
     const insideClick = this.renderer.invokeElementMethod($event.target, 'closest', ['Tree']);
 
