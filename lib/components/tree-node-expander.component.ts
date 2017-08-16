@@ -39,7 +39,8 @@ import { TreeNode } from '../models/tree-node.model';
         [class.toggle-children-wrapper-expanded]="node.isExpanded"
         [class.toggle-children-wrapper-collapsed]="node.isCollapsed"
         class="toggle-children-wrapper"
-        (click)="node.mouseAction('expanderClick', $event)">
+        (click)="node.mouseAction('expanderClick', $event)"
+        (keypress)="handleKeyPress($event)">
 
         <span class="toggle-children"></span>
       </span>
@@ -52,4 +53,10 @@ import { TreeNode } from '../models/tree-node.model';
 })
 export class TreeNodeExpanderComponent {
   @Input() node: TreeNode;
+  
+  handleKeyPress(event : KeyboardEvent){
+     if (event.keyCode === 13 || event.keyCode === 32) {
+        this.node.mouseAction('expanderClick', event); 
+     }
+  }
 }
