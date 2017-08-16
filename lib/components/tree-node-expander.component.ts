@@ -35,6 +35,7 @@ import { TreeNode } from '../models/tree-node.model';
   template: `
     <ng-container *mobxAutorun>
       <span
+        tabindex="0"
         *ngIf="node.hasChildren"
         [class.toggle-children-wrapper-expanded]="node.isExpanded"
         [class.toggle-children-wrapper-collapsed]="node.isCollapsed"
