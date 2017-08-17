@@ -54,10 +54,10 @@ import { TreeNode } from '../models/tree-node.model';
 })
 export class TreeNodeExpanderComponent {
   @Input() node: TreeNode;
-  
-  handleKeyPress(event : KeyboardEvent){
-     if (event.keyCode === 13 || event.keyCode === 32) {
-        this.node.mouseAction('expanderClick', event); 
-     }
+
+  handleKeyPress($event: KeyboardEvent) {
+    if ($event.code === 'Enter' || $event.code === 'Space') {
+        this.node.mouseAction('expanderClick', $event);
+    }
   }
 }
