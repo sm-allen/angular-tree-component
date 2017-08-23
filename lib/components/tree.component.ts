@@ -38,6 +38,7 @@ const { includes, pick }  = _;
         class="tree"
         role="tree"
         tabindex="0"
+        [class.outline-none]="!treeModel.isOutlineVisible()"
         [class.node-dragging]="treeDraggedElement.isDragging()">
         <tree-node-collection
           *ngIf="treeModel.roots"
@@ -120,7 +121,7 @@ export class TreeComponent implements OnChanges {
   @HostListener('mousedown', ['$event'])
   onMousedown($event) {
     const insideClick = this.renderer.invokeElementMethod($event.target, 'closest', ['Tree']);
-
+    this.treeModel.setOutlineVisible(false);
     if (!insideClick) {
       this.treeModel.setFocus(false);
     }
