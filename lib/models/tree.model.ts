@@ -19,6 +19,7 @@ export class TreeModel implements ITreeModel {
   nodes: any[];
   eventNames = Object.keys(TREE_EVENTS);
   virtualScroll: TreeVirtualScroll;
+  outlineVisible = true;
 
   @observable roots: TreeNode[];
   @observable expandedNodeIds: IDTypeDictionary = {};
@@ -79,6 +80,10 @@ export class TreeModel implements ITreeModel {
 
   isEmptyTree(): boolean {
     return this.roots && this.roots.length === 0;
+  }
+
+  isOutlineVisible(): boolean {
+    return this.outlineVisible;
   }
 
   @computed get focusedNode() {
@@ -199,6 +204,10 @@ export class TreeModel implements ITreeModel {
     TreeModel.focusedTree = value ? this : null;
   }
 
+  @action setOutlineVisible(value) {
+    this.outlineVisible = value;
+  }
+
   @action doForAll(fn) {
     this.roots.forEach((root) => root.doForAll(fn));
   }
@@ -277,8 +286,17 @@ export class TreeModel implements ITreeModel {
     }), {});
   }
 
+  // @action showOutline() {
+  //   this.setOutlineVisible(true);
+  // }
+
+  // @action hideOutline() {
+  //   this.setOutlineVisible(false);
+  // }
+
   performKeyAction(node, $event) {
     const action = this.options.actionMapping.keys[$event.keyCode];
+    this.setOutlineVisible(true);
     if (action) {
       $event.preventDefault();
       action(this, node, $event);
@@ -376,7 +394,8 @@ export class TreeModel implements ITreeModel {
       expandedNodeIds: this.expandedNodeIds,
       activeNodeIds: this.activeNodeIds,
       hiddenNodeIds: this.hiddenNodeIds,
-      focusedNodeId: this.focusedNodeId
+      focusedNodeId: this.focusedNodeId,
+      outlineVisible: this.outlineVisible
     };
   }
 
@@ -387,7 +406,8 @@ export class TreeModel implements ITreeModel {
       expandedNodeIds: state.expandedNodeIds || {},
       activeNodeIds: state.activeNodeIds || {},
       hiddenNodeIds: state.hiddenNodeIds || {},
-      focusedNodeId: state.focusedNodeId
+      focusedNodeId: state.focusedNodeId,
+      outlineVisible: state.outlineVisible || false
     });
   }
 
