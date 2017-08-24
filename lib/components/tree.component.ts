@@ -38,7 +38,6 @@ const { includes, pick }  = _;
         class="tree"
         role="tree"
         tabindex="0"
-        (focus)="onFocus()"
         [class.outline-none]="!treeModel.isOutlineVisible()"
         [class.node-dragging]="treeDraggedElement.isDragging()">
         <tree-node-collection
@@ -150,14 +149,6 @@ export class TreeComponent implements OnChanges {
     this.treeModel.setOutlineVisible(false);
     if (!insideClick) {
       this.treeModel.setFocus(false);
-    }
-  }
-  // Handle setting focus on root node when tree first recieves focus.
-  onFocus() {
-    let focusedNode = this.treeModel.getFocusedNode();
-    if (!focusedNode) {
-        let firstNode = this.treeModel.getFirstRoot(true);
-        this.treeModel.setFocusedNode(firstNode);
     }
   }
 
