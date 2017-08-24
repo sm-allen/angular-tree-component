@@ -153,7 +153,7 @@ export class TreeComponent implements OnChanges {
     }
   }
   // Handle setting focus on root node when tree first recieves focus.
-  onfocus() {
+  onFocus() {
     let focusedNode = this.treeModel.getFocusedNode();
     if (!focusedNode) {
         let firstNode = this.treeModel.getFirstRoot(true);
