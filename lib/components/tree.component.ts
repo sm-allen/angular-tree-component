@@ -38,6 +38,7 @@ const { includes, pick }  = _;
         class="tree"
         role="tree"
         tabindex="0"
+        (focus)="onFocus()"
         [class.outline-none]="!treeModel.isOutlineVisible()"
         [class.node-dragging]="treeDraggedElement.isDragging()">
         <tree-node-collection
@@ -115,6 +116,31 @@ export class TreeComponent implements OnChanges {
 
     let focusedNode = this.treeModel.getFocusedNode();
 
+    // Home key => focus on root node.
+    if ($event.key === 'Home') {
+        let firstNode = this.treeModel.getFirstRoot(true);
+        this.treeModel.setFocusedNode(firstNode);
+        return;
+    }
+
+    // End key => focus on last visible node.
+    if ($event.key === 'End') {
+        let lastNode = this.treeModel.getLastRoot();
+
+        while (lastNode.hasChildren && lastNode.isExpanded) {
+            lastNode = lastNode.getLastChild(true);
+        }
+
+        this.treeModel.setFocusedNode(lastNode);
+        return;
+    }
+
+    // * key => expand all nodes.
+    if ($event.key === '*') {
+        this.treeModel.expandAll();
+        return;
+    }
+
     this.treeModel.performKeyAction(focusedNode, $event);
   }
 
@@ -124,6 +150,14 @@ export class TreeComponent implements OnChanges {
     this.treeModel.setOutlineVisible(false);
     if (!insideClick) {
       this.treeModel.setFocus(false);
+    }
+  }
+  // Handle setting focus on root node when tree first recieves focus.
+  onfocus() {
+    let focusedNode = this.treeModel.getFocusedNode();
+    if (!focusedNode) {
+        let firstNode = this.treeModel.getFirstRoot(true);
+        this.treeModel.setFocusedNode(firstNode);
     }
   }
 
