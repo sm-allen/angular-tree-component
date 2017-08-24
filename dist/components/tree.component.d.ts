@@ -34,6 +34,7 @@ export declare class TreeComponent implements OnChanges {
     constructor(treeModel: TreeModel, treeDraggedElement: TreeDraggedElement, renderer: Renderer);
     onKeydown($event: any): void;
     onMousedown($event: any): void;
+    onfocus(): void;
     ngOnChanges(changes: any): void;
     sizeChanged(): void;
 }
