@@ -8,6 +8,7 @@ export declare class TreeModel implements ITreeModel {
     nodes: any[];
     eventNames: string[];
     virtualScroll: TreeVirtualScroll;
+    outlineVisible: boolean;
     roots: TreeNode[];
     expandedNodeIds: IDTypeDictionary;
     activeNodeIds: IDTypeDictionary;
@@ -28,6 +29,7 @@ export declare class TreeModel implements ITreeModel {
     readonly isFocused: boolean;
     isNodeFocused(node: any): boolean;
     isEmptyTree(): boolean;
+    isOutlineVisible(): boolean;
     readonly focusedNode: any;
     readonly expandedNodes: any[];
     readonly activeNodes: any[];
@@ -37,6 +39,7 @@ export declare class TreeModel implements ITreeModel {
     isExpanded(node: any): any;
     isHidden(node: any): any;
     isActive(node: any): any;
+    setInitialFocus(): void;
     setData({nodes, options, events}: {
         nodes: any;
         options: any;
@@ -45,6 +48,7 @@ export declare class TreeModel implements ITreeModel {
     update(): void;
     setFocusedNode(node: any): void;
     setFocus(value: any): void;
+    setOutlineVisible(value: any): void;
     doForAll(fn: any): void;
     focusNextNode(): void;
     focusPreviousNode(): void;
@@ -66,6 +70,7 @@ export declare class TreeModel implements ITreeModel {
         activeNodeIds: IDTypeDictionary;
         hiddenNodeIds: IDTypeDictionary;
         focusedNodeId: IDType;
+        outlineVisible: boolean;
     };
     setState(state: any): void;
     subscribeToState(fn: any): void;
