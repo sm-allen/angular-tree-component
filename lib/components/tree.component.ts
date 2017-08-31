@@ -38,6 +38,7 @@ const { includes, pick }  = _;
         class="tree"
         role="tree"
         tabindex="0"
+        [class.outline-none]="!treeModel.isOutlineVisible()"
         [class.node-dragging]="treeDraggedElement.isDragging()">
         <tree-node-collection
           *ngIf="treeModel.roots"
@@ -114,13 +115,38 @@ export class TreeComponent implements OnChanges {
 
     let focusedNode = this.treeModel.getFocusedNode();
 
+    // Home key => focus on root node.
+    if ($event.key === 'Home') {
+        let firstNode = this.treeModel.getFirstRoot(true);
+        this.treeModel.setFocusedNode(firstNode);
+        return;
+    }
+
+    // End key => focus on last visible node.
+    if ($event.key === 'End') {
+        let lastNode = this.treeModel.getLastRoot();
+
+        while (lastNode.hasChildren && lastNode.isExpanded) {
+            lastNode = lastNode.getLastChild(true);
+        }
+
+        this.treeModel.setFocusedNode(lastNode);
+        return;
+    }
+
+    // * key => expand all nodes.
+    if ($event.key === '*') {
+        this.treeModel.expandAll();
+        return;
+    }
+
     this.treeModel.performKeyAction(focusedNode, $event);
   }
 
   @HostListener('mousedown', ['$event'])
   onMousedown($event) {
     const insideClick = this.renderer.invokeElementMethod($event.target, 'closest', ['Tree']);
-
+    this.treeModel.setOutlineVisible(false);
     if (!insideClick) {
       this.treeModel.setFocus(false);
     }
